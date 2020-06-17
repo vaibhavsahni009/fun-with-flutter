@@ -6,3 +6,9 @@ class Task {
     isDone = !isDone;
   }
 }
+
+List<Task> tasks = [
+  Task(name: "get milk"),
+  Task(name: "get eggs"),
+  Task(name: "get bread"),
+];
