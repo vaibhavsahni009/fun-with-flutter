@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8b32fc0d-5bf7-49e0-8597-d770f5eaac3a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Clima-Flutter.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Clima-Flutter.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -61,9 +60,9 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state x="466" y="124" width="424" height="484" key="FileChooserDialogImpl" timestamp="1591633388555">
+    <state x="466" y="124" width="424" height="484" key="FileChooserDialogImpl" timestamp="1593291133352">
       <screen x="0" y="0" width="1366" height="732" />
     </state>
-    <state x="466" y="124" width="424" height="484" key="FileChooserDialogImpl/0.0.1366.732@0.0.1366.732" timestamp="1591633388555" />
+    <state x="466" y="124" width="424" height="484" key="FileChooserDialogImpl/0.0.1366.732@0.0.1366.732" timestamp="1593291133352" />
   </component>
 </project>
