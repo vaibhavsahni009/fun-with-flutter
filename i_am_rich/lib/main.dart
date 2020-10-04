@@ -15,7 +15,7 @@ class Codiv extends StatelessWidget {
     return Scaffold(
 //        backgroundColor: Colors.blueGrey,
       appBar: AppBar(
-        title: Center(child: Text("Codiv-91")),
+        title: Center(child: Text("I am Rich")),
 //          backgroundColor: Colors.blueGrey[900],
       ),
       body: Center(
