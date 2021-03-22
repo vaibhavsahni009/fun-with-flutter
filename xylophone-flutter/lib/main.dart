@@ -9,7 +9,7 @@ class XylophoneApp extends StatelessWidget {
   Widget build(BuildContext context) {
     Expanded buildKey(int x, Color c) {
       return Expanded(
-        child: FlatButton(
+        child: MaterialButton(
           onPressed: () {
             final player = AudioCache();
             player.play('note$x.wav');
