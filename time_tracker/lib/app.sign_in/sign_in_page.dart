@@ -1,6 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SignInPage extends StatelessWidget {
+  Future<void> _signInAnonymously() async {
+    final userCredentials = await FirebaseAuth.instance.signInAnonymously();
+    print('${userCredentials.user.uid}');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,18 +29,99 @@ class SignInPage extends StatelessWidget {
                 ),
               ),
               SizedBox(
+                height: 48,
+              ),
+              ElevatedButton(
+                onPressed: () {},
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Image.asset('images/google-logo.png'),
+                    Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: Text(
+                        'Sign In with Google',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ),
+                    Opacity(
+                      opacity: 0,
+                      child: Image.asset('images/google-logo.png'),
+                    )
+                  ],
+                ),
+                style: ElevatedButton.styleFrom(primary: Colors.white),
+              ),
+              SizedBox(
                 height: 8,
               ),
               ElevatedButton(
                 onPressed: () {},
-                child: Text(
-                  'Sign In with Google',
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.black87,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Image.asset('images/facebook-logo.png'),
+                    Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: Text(
+                        'Sign In with Facebook',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    Opacity(
+                        opacity: 0,
+                        child: Image.asset('images/facebook-logo.png')),
+                  ],
+                ),
+                style: ElevatedButton.styleFrom(primary: Colors.blue),
+              ),
+              SizedBox(
+                height: 8,
+              ),
+              ElevatedButton(
+                onPressed: () {},
+                child: Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: Text(
+                    'Sign In with Email',
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
-                style: ElevatedButton.styleFrom(primary: Colors.white),
+                style: ElevatedButton.styleFrom(primary: Colors.teal[700]),
+              ),
+              SizedBox(
+                height: 8,
+              ),
+              Text(
+                'or',
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.black87, fontSize: 14),
+              ),
+              SizedBox(
+                height: 8,
+              ),
+              ElevatedButton(
+                onPressed: _signInAnonymously,
+                child: Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: Text(
+                    'Go anonymous',
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.black87,
+                    ),
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(primary: Colors.limeAccent),
               ),
             ],
           )),
