@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:time_tracker/app.sign_in/sign_in_page.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:time_tracker/app/landing_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Time Tracker',
       theme: ThemeData(primarySwatch: Colors.purple),
-      home: SignInPage(),
+      home: LandingPage(),
     );
   }
 }
