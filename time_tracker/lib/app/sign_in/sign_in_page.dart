@@ -1,29 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:time_tracker/app/sign_in/email_sign_in_page.dart';
-import 'package:time_tracker/services/auth.dart';
+import 'package:time_tracker/services/auth_provider.dart';
 
 class SignInPage extends StatelessWidget {
-  final AuthBase auth;
-  const SignInPage({Key key, @required this.auth}) : super(key: key);
-
-  Future<void> _signInAnonymously() async {
+  Future<void> _signInAnonymously(BuildContext context) async {
     try {
+      final auth = AuthProvider.of(context);
       await auth.signInAnonymously();
     } catch (e) {
       print(e.toString());
     }
   }
 
-  Future<void> _signInWithGoogle() async {
+  Future<void> _signInWithGoogle(BuildContext context) async {
     try {
+      final auth = AuthProvider.of(context);
+
       await auth.signInWithGoogle();
     } catch (e) {
       print(e.toString());
     }
   }
 
-  Future<void> _signInWithFacebook() async {
+  Future<void> _signInWithFacebook(BuildContext context) async {
     try {
+      final auth = AuthProvider.of(context);
+
       await auth.signInWithFacebook();
     } catch (e) {
       print(e.toString());
@@ -33,9 +35,7 @@ class SignInPage extends StatelessWidget {
   void _signInWithEmail(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => EmailSignInPage(
-          auth: auth,
-        ),
+        builder: (context) => EmailSignInPage(),
       ),
     );
   }
@@ -70,7 +70,7 @@ class SignInPage extends StatelessWidget {
               height: 48,
             ),
             ElevatedButton(
-              onPressed: _signInWithGoogle,
+              onPressed: () => _signInWithGoogle(context),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -97,7 +97,7 @@ class SignInPage extends StatelessWidget {
               height: 8,
             ),
             ElevatedButton(
-              onPressed: _signInWithFacebook,
+              onPressed: () => _signInWithFacebook(context),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -148,7 +148,7 @@ class SignInPage extends StatelessWidget {
               height: 8,
             ),
             ElevatedButton(
-              onPressed: _signInAnonymously,
+              onPressed: () => _signInAnonymously(context),
               child: Padding(
                 padding: const EdgeInsets.all(18.0),
                 child: Text(
