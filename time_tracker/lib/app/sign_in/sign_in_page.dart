@@ -1,16 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:time_tracker/app/sign_in/email_sign_in_page.dart';
+import 'package:time_tracker/common_widgets/show_alert_dialog.dart';
 import 'package:time_tracker/services/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SignInPage extends StatelessWidget {
+
+void _showSignInError(BuildContext context, Exception e){
+        
+        if(e is FirebaseAuthException && e.code=='ERROR_ABORTED_BY_USER'){
+          return;
+        }
+        showAlertDialog(
+        context,
+        title: 'Sign In Failed',
+        content: e is FirebaseAuthException ? e.message : e.toString(),
+        defaultActionText: 'Ok',
+      );
+}
+
+
   Future<void> _signInAnonymously(BuildContext context) async {
     try {
       final auth = Provider.of<AuthBase>(context, listen: false);
 
       await auth.signInAnonymously();
     } catch (e) {
-      print(e.toString());
+      _showSignInError(context,e);
     }
   }
 
@@ -20,7 +37,8 @@ class SignInPage extends StatelessWidget {
 
       await auth.signInWithGoogle();
     } catch (e) {
-      print(e.toString());
+           _showSignInError(context,e);
+
     }
   }
 
@@ -30,7 +48,8 @@ class SignInPage extends StatelessWidget {
 
       await auth.signInWithFacebook();
     } catch (e) {
-      print(e.toString());
+      _showSignInError(context,e);
+
     }
   }
 

@@ -1,5 +1,6 @@
 // import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:time_tracker/app/sign_in/validators.dart';
@@ -35,11 +36,13 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
         await auth.createUserWithEmailAndPassword(_email, _password);
       }
       Navigator.of(context).pop();
-    } catch (e) {
-      showAlertDialog(context,
-          title: 'Sign In Failed',
-          content: e.toString(),
-          defaultActionText: 'Ok');
+    } on Exception catch (e) {
+      showAlertDialog(
+        context,
+        title: 'Sign In Failed',
+        content: e is FirebaseAuthException ? e.message : e.toString(),
+        defaultActionText: 'Ok',
+      );
     } finally {
       setState(() {
         _isLoading = false;
