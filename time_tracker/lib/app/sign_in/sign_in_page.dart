@@ -5,51 +5,73 @@ import 'package:time_tracker/common_widgets/show_alert_dialog.dart';
 import 'package:time_tracker/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class SignInPage extends StatelessWidget {
-
-void _showSignInError(BuildContext context, Exception e){
-        
-        if(e is FirebaseAuthException && e.code=='ERROR_ABORTED_BY_USER'){
-          return;
-        }
-        showAlertDialog(
-        context,
-        title: 'Sign In Failed',
-        content: e is FirebaseAuthException ? e.message : e.toString(),
-        defaultActionText: 'Ok',
-      );
+class SignInPage extends StatefulWidget {
+  @override
+  _SignInPageState createState() => _SignInPageState();
 }
 
+class _SignInPageState extends State<SignInPage> {
+  void _showSignInError(BuildContext context, Exception e) {
+    if (e is FirebaseAuthException && e.code == 'ERROR_ABORTED_BY_USER') {
+      return;
+    }
+    showAlertDialog(
+      context,
+      title: 'Sign In Failed',
+      content: e is FirebaseAuthException ? e.message : e.toString(),
+      defaultActionText: 'Ok',
+    );
+  }
 
+  bool _isLoading = false;
   Future<void> _signInAnonymously(BuildContext context) async {
     try {
+      setState(() {
+        _isLoading = true;
+      });
       final auth = Provider.of<AuthBase>(context, listen: false);
 
       await auth.signInAnonymously();
     } catch (e) {
-      _showSignInError(context,e);
+      _showSignInError(context, e);
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
   Future<void> _signInWithGoogle(BuildContext context) async {
     try {
+      setState(() {
+        _isLoading = true;
+      });
       final auth = Provider.of<AuthBase>(context, listen: false);
 
       await auth.signInWithGoogle();
     } catch (e) {
-           _showSignInError(context,e);
-
+      _showSignInError(context, e);
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
   Future<void> _signInWithFacebook(BuildContext context) async {
     try {
+      setState(() {
+        _isLoading = true;
+      });
       final auth = Provider.of<AuthBase>(context, listen: false);
 
       await auth.signInWithFacebook();
     } catch (e) {
-      _showSignInError(context,e);
-
+      _showSignInError(context, e);
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -79,19 +101,15 @@ void _showSignInError(BuildContext context, Exception e){
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              'Sign In',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.w600,
-              ),
+            SizedBox(
+              child: _buildHeader(),
+              height: 50,
             ),
             SizedBox(
               height: 48,
             ),
             ElevatedButton(
-              onPressed: () => _signInWithGoogle(context),
+              onPressed: _isLoading ? null : () => _signInWithGoogle(context),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -118,7 +136,7 @@ void _showSignInError(BuildContext context, Exception e){
               height: 8,
             ),
             ElevatedButton(
-              onPressed: () => _signInWithFacebook(context),
+              onPressed: _isLoading ? null : () => _signInWithFacebook(context),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -144,7 +162,7 @@ void _showSignInError(BuildContext context, Exception e){
               height: 8,
             ),
             ElevatedButton(
-              onPressed: () => _signInWithEmail(context),
+              onPressed: _isLoading ? null : () => _signInWithEmail(context),
               child: Padding(
                 padding: const EdgeInsets.all(18.0),
                 child: Text(
@@ -169,7 +187,7 @@ void _showSignInError(BuildContext context, Exception e){
               height: 8,
             ),
             ElevatedButton(
-              onPressed: () => _signInAnonymously(context),
+              onPressed: _isLoading ? null : () => _signInAnonymously(context),
               child: Padding(
                 padding: const EdgeInsets.all(18.0),
                 child: Text(
@@ -184,5 +202,21 @@ void _showSignInError(BuildContext context, Exception e){
             ),
           ],
         ));
+  }
+
+  Widget _buildHeader() {
+    if (_isLoading) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+    return Text(
+      'Sign In',
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        fontSize: 32,
+        fontWeight: FontWeight.w600,
+      ),
+    );
   }
 }
